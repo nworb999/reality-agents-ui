@@ -8,20 +8,10 @@ export default class ConversationGameController {
     this.gameFinished = false;
   }
 
-  async createGame() {
-    // Retrieve values from the form inputs
-    const scene = document.getElementById("sceneInput").value;
-    const conflict = document.getElementById("conflictInput").value;
-    const charactersInput = document.getElementById("charactersInput").value;
-
-    // Convert characters input to an array of character objects
-    const characters = charactersInput
-      .split(",")
-      .map((name) => collectCharacterInfo(name.trim()));
-
-    // POST request with the game setup data
+  async createGame({ scene, conflict, characters: characters }) {
     const response = await fetch(`${URL}/api/game/create`, {
       method: "POST",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
@@ -29,6 +19,7 @@ export default class ConversationGameController {
         scene: scene,
         conflict: conflict,
         characters: characters,
+        test_flag: true,
       }),
     });
     const data = await response.json();
@@ -36,8 +27,12 @@ export default class ConversationGameController {
   }
 
   async startGame() {
-    // Fetch game setup from the backend
-    const response = await fetch(`${URL}/api/game/setup`);
+    const response = await fetch(`${URL}/api/game/start`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     const data = await response.json();
     this.characters = data.characters;
     if (!this.characters.length) return;

@@ -5,7 +5,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles.css">
+        <!-- <link rel="stylesheet" href="styles.css"> -->
+        <link rel="icon" type="image/x-icon" href="public/favicon.ico">
         <title>reality agents</title>
         <style>
             html {
@@ -49,21 +50,38 @@
                 <label for="conflictInput">Conflict:</label>
                 <input type="text" id="conflictInput" name="conflict">
             </div>
-            <div class="character-inputs">
+            <div class="character">
                 <div>
-                    <label for="characterNameInput">Character Name:</label>
-                    <input type="text" class="character-name" name="characterName" placeholder="Name">
+                    <label for="characterNameInput1">Character 1 Name:</label>
+                    <input type="text" class="character-name" name="characterName1" placeholder="Name">
                 </div>
                 <div>
-                    <label for="characterPersonalityInput">Character Personality:</label>
-                    <input type="text" class="character-personality" name="characterPersonality"
+                    <label for="characterPersonalityInput1">Character 1 Personality:</label>
+                    <input type="text" class="character-personality" name="characterPersonality1"
                         placeholder="Personality">
                 </div>
                 <div>
-                    <label for="characterRelationInput">Character Relationship:</label>
-                    <input type="text" class="character-relation" name="characterRelation"
+                    <label for="characterRelationInput1">Character 1 Relationship:</label>
+                    <input type="text" class="character-relation" name="characterRelation1"
                         placeholder="Relationship with other characters">
                 </div>
+            </div>
+            <div class="character">
+                <div>
+                    <label for="characterNameInput2">Character 2 Name:</label>
+                    <input type="text" class="character-name" name="characterName2" placeholder="Name">
+                </div>
+                <div>
+                    <label for="characterPersonalityInput2">Character 2 Personality:</label>
+                    <input type="text" class="character-personality" name="characterPersonality2"
+                        placeholder="Personality">
+                </div>
+                <div>
+                    <label for="characterRelationInput2">Character 2 Relationship:</label>
+                    <input type="text" class="character-relation" name="characterRelation2"
+                        placeholder="Relationship with other characters">
+                </div>
+            </div>
             </div>
             <button type="submit">Start Game</button>
         </form>
