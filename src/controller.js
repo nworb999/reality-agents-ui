@@ -1,5 +1,4 @@
 import { URL } from "./constants.js";
-import { collectCharacterInfo } from "./utils.js";
 
 export default class ConversationGameController {
   constructor() {
@@ -9,9 +8,16 @@ export default class ConversationGameController {
   }
 
   async createGame({ scene, conflict, characters: characters }) {
+    console.log(
+      JSON.stringify({
+        scene: scene,
+        conflict: conflict,
+        characters: characters,
+        test_flag: true,
+      })
+    );
     const response = await fetch(`${URL}/api/game/create`, {
       method: "POST",
-      mode: "cors",
       headers: {
         "Content-Type": "application/json",
       },
