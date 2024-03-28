@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+        <title>reality agents</title>
+        <style>
+            html {
+                background-color: #14191e;
+                color: #dbdbdb;
+            }
+
+            .ascii-art {
+                line-height: 1;
+            }
+
+            .cli-container {
+                background-color: #14191e;
+                padding: 10px;
+                font-family: 'Courier New', monospace;
+                max-height: 400px;
+            }
+
+
+            form {
+                margin-top: 20px;
+                font-family: 'Courier New', monospace;
+
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="cli-container" id="cliOutput">
+            <pre class="ascii-art">
+            █▀█ █▀▀ ▄▀█ █░░ █ ▀█▀ █▄█   ▄▀█ █▀▀ █▀▀ █▄░█ ▀█▀ █▀
+            █▀▄ ██▄ █▀█ █▄▄ █ ░█░ ░█░   █▀█ █▄█ ██▄ █░▀█ ░█░ ▄█
+            </pre>
+        </div>
+        <form id="game-setup-form">
+            <div>
+                <label for="sceneInput">Scene:</label>
+                <input type="text" id="sceneInput" name="scene">
+            </div>
+            <div>
+                <label for="conflictInput">Conflict:</label>
+                <input type="text" id="conflictInput" name="conflict">
+            </div>
+            <div class="character-inputs">
+                <div>
+                    <label for="characterNameInput">Character Name:</label>
+                    <input type="text" class="character-name" name="characterName" placeholder="Name">
+                </div>
+                <div>
+                    <label for="characterPersonalityInput">Character Personality:</label>
+                    <input type="text" class="character-personality" name="characterPersonality"
+                        placeholder="Personality">
+                </div>
+                <div>
+                    <label for="characterRelationInput">Character Relationship:</label>
+                    <input type="text" class="character-relation" name="characterRelation"
+                        placeholder="Relationship with other characters">
+                </div>
+            </div>
+            <button type="submit">Start Game</button>
+        </form>
+        <script type="module" src="main.js"></script>
+    </body>
+
+</html>
