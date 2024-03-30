@@ -8,14 +8,6 @@ export default class ConversationGameController {
   }
 
   async createGame({ scene, conflict, characters: characters }) {
-    console.log(
-      JSON.stringify({
-        scene: scene,
-        conflict: conflict,
-        characters: characters,
-        test_flag: true,
-      })
-    );
     const response = await fetch(`${URL}/api/game/create`, {
       method: "POST",
       headers: {
@@ -29,7 +21,6 @@ export default class ConversationGameController {
       }),
     });
     const data = await response.json();
-    console.log(data);
   }
 
   async startGame() {
@@ -40,9 +31,6 @@ export default class ConversationGameController {
       },
     });
     const data = await response.json();
-    this.characters = data.characters;
-    if (!this.characters.length) return;
-
     this.gameLoop();
   }
 
@@ -51,6 +39,7 @@ export default class ConversationGameController {
       await this.processCharacterTurn();
       this.currentCharacter =
         (this.currentCharacter + 1) % this.characters.length;
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay before the next turn
     }
   }
 
@@ -60,9 +49,6 @@ export default class ConversationGameController {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        characterId: this.characters[this.currentCharacter].id,
-      }),
     });
     const data = await response.json();
 

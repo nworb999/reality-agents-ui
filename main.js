@@ -25,7 +25,6 @@ gameSetupForm.addEventListener("submit", async (event) => {
   );
   const scene = document.getElementById("sceneInput").value;
   const conflict = document.getElementById("conflictInput").value;
-  console.log(scene, conflict);
 
   await gameController.createGame({
     scene,
