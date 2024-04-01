@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <link rel="stylesheet" href="styles.css"> -->
+        <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+        <title>reality agents</title>
+        <style>
+            html {
+                background-color: #14191e;
+                color: #dbdbdb;
+            }
+
+            .ascii-art {
+                line-height: 1;
+            }
+
+            .cli-container {
+                background-color: #14191e;
+                padding: 10px;
+                font-family: 'Courier New', monospace;
+                max-height: 400px;
+            }
+
+
+            form {
+                margin-top: 20px;
+                font-family: 'Courier New', monospace;
+
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="cli-container" id="cliOutput">
+            <pre class="ascii-art">
+            █▀█ █▀▀ ▄▀█ █░░ █ ▀█▀ █▄█   ▄▀█ █▀▀ █▀▀ █▄░█ ▀█▀ █▀
+            █▀▄ ██▄ █▀█ █▄▄ █ ░█░ ░█░   █▀█ █▄█ ██▄ █░▀█ ░█░ ▄█
+            </pre>
+        </div>
+        <form id="game-setup-form">
+            <div>
+                <label for="sceneInput">Scene:</label>
+                <input type="text" id="sceneInput" name="scene">
+            </div>
+            <div>
+                <label for="conflictInput">Conflict:</label>
+                <input type="text" id="conflictInput" name="conflict">
+            </div>
+            <div class="character">
+                <div>
+                    <label for="characterNameInput1">Character 1 Name:</label>
+                    <input type="text" class="character-name" name="characterName1" placeholder="Name">
+                </div>
+                <div>
+                    <label for="characterPersonalityInput1">Character 1 Personality:</label>
+                    <input type="text" class="character-personality" name="characterPersonality1"
+                        placeholder="Personality">
+                </div>
+                <div>
+                    <label for="characterRelationInput1">Character 1 Relationship:</label>
+                    <input type="text" class="character-relation" name="characterRelation1"
+                        placeholder="Relationship with other characters">
+                </div>
+            </div>
+            <div class="character">
+                <div>
+                    <label for="characterNameInput2">Character 2 Name:</label>
+                    <input type="text" class="character-name" name="characterName2" placeholder="Name">
+                </div>
+                <div>
+                    <label for="characterPersonalityInput2">Character 2 Personality:</label>
+                    <input type="text" class="character-personality" name="characterPersonality2"
+                        placeholder="Personality">
+                </div>
+                <div>
+                    <label for="characterRelationInput2">Character 2 Relationship:</label>
+                    <input type="text" class="character-relation" name="characterRelation2"
+                        placeholder="Relationship with other characters">
+                </div>
+            </div>
+            </div>
+            <button type="submit">Start Game</button>
+        </form>
+        <script type="module" src="main.js"></script>
+    </body>
+
+</html>
