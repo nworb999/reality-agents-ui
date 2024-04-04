@@ -1,14 +1,12 @@
 import ConversationGameController from "./src/controller.js";
 
+let script = "";
 const gameSetupForm = document.getElementById("game-setup-form");
+const gameController = new ConversationGameController(script);
 
-// Handle form submission
 gameSetupForm.addEventListener("submit", async (event) => {
   // Prevent the default form submission behavior
   event.preventDefault();
-
-  // Create a new game controller
-  const gameController = new ConversationGameController();
 
   const characters = Array.from(document.querySelectorAll(".character")).map(
     (characterDiv) => {
@@ -32,6 +30,12 @@ gameSetupForm.addEventListener("submit", async (event) => {
     characters: characters,
   });
 
-  // Start the game
   gameController.startGame();
 });
+
+const gameLoopJob = setInterval(() => {
+  if (gameController.gameStarted) {
+    clearInterval(gameLoopJob);
+    gameController.gameLoop();
+  }
+}, 1000);
