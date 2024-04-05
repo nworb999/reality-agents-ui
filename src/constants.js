@@ -25,7 +25,6 @@ export const GENERIC_SIMS_STATEMENTS = [
   "Ensuring the microphones are hidden...",
   "Infusing the air with aroma...",
   "Charging the crystals...",
-  "Tidying up the place...",
   "Testing the lighting...",
   "Arranging the scenery...",
   "Adjusting the camera angles...",

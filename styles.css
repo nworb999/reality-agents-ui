@@ -1,0 +1,59 @@
+html {
+    background-color: #14191e;
+    color: #dbdbdb;
+}
+
+.ascii-art {
+    line-height: 1;
+    text-align: left;
+}
+
+.header-text {
+    background-color: #14191e;
+    padding: 1vw;
+    font-family: 'Courier New', monospace;
+    max-height: 50vh;
+}
+
+form {
+    margin-top: 2vw;
+    padding-left: 1vw;
+    /* Add left padding to the form */
+    font-family: 'Courier New', monospace;
+}
+
+form div {
+    text-align: left;
+}
+
+input {
+    background-color: #14191e;
+    color: #dbdbdb;
+    border: 1px solid #14191e;
+    padding: 0.5vw;
+    width: calc(70% - 2vw);
+    font-family: 'Courier New', monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+input:focus {
+    outline: none;
+    animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+.text-box {
+    padding-left: 2vw;
+    /* Add left padding to the text box */
+    width: 80%;
+    font-family: 'Courier New', monospace;
+    display: none;
+    white-space: pre-line;
+}

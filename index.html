@@ -5,81 +5,59 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <link rel="stylesheet" href="styles.css"> -->
+        <link rel="stylesheet" href="styles.css">
         <link rel="icon" type="image/x-icon" href="public/favicon.ico">
         <title>reality agents</title>
-        <style>
-            html {
-                background-color: #14191e;
-                color: #dbdbdb;
-            }
-
-            .ascii-art {
-                line-height: 1;
-            }
-
-            .cli-container {
-                background-color: #14191e;
-                padding: 10px;
-                font-family: 'Courier New', monospace;
-                max-height: 400px;
-            }
-
-
-            form {
-                margin-top: 20px;
-                font-family: 'Courier New', monospace;
-
-            }
-        </style>
     </head>
 
     <body>
-        <div class="cli-container" id="cliOutput">
+        <div class="header-text" id="headerText">
             <pre class="ascii-art">
             █▀█ █▀▀ ▄▀█ █░░ █ ▀█▀ █▄█   ▄▀█ █▀▀ █▀▀ █▄░█ ▀█▀ █▀
             █▀▄ ██▄ █▀█ █▄▄ █ ░█░ ░█░   █▀█ █▄█ ██▄ █░▀█ ░█░ ▄█
             </pre>
         </div>
+        <p class="text-box" id="textBox">
+        </p>
         <form id="game-setup-form">
             <div>
-                <label for="sceneInput">Scene:</label>
-                <input type="text" id="sceneInput" name="scene">
+                <label for="sceneInput">scene:</label>
+                <input type="text" id="sceneInput" name="scene" placeholder="radioshack">
             </div>
             <div>
-                <label for="conflictInput">Conflict:</label>
-                <input type="text" id="conflictInput" name="conflict">
+                <label for="conflictInput">conflict:</label>
+                <input type="text" id="conflictInput" name="conflict" placeholder="money">
             </div>
             <div class="character">
                 <div>
-                    <label for="characterNameInput1">Character 1 Name:</label>
-                    <input type="text" class="character-name" name="characterName1" placeholder="Name">
+                    <label for="characterNameInput1">character 1 name:</label>
+                    <input type="text" class="character-name" name="characterName1" placeholder="Bob">
                 </div>
                 <div>
-                    <label for="characterPersonalityInput1">Character 1 Personality:</label>
+                    <label for="characterPersonalityInput1">character 1 personality:</label>
                     <input type="text" class="character-personality" name="characterPersonality1"
-                        placeholder="Personality">
+                        placeholder="loud but kind">
                 </div>
                 <div>
-                    <label for="characterRelationInput1">Character 1 Relationship:</label>
+                    <label for="characterRelationInput1">relationship with character 2:</label>
                     <input type="text" class="character-relation" name="characterRelation1"
-                        placeholder="Relationship with other characters">
+                        placeholder="Bob finds Rob irritating">
                 </div>
             </div>
             <div class="character">
                 <div>
-                    <label for="characterNameInput2">Character 2 Name:</label>
-                    <input type="text" class="character-name" name="characterName2" placeholder="Name">
+                    <label for="characterNameInput2">character 2 name:</label>
+                    <input type="text" class="character-name" name="characterName2" placeholder="Rob">
                 </div>
                 <div>
-                    <label for="characterPersonalityInput2">Character 2 Personality:</label>
+                    <label for="characterPersonalityInput2">character 2 personality:</label>
                     <input type="text" class="character-personality" name="characterPersonality2"
-                        placeholder="Personality">
+                        placeholder="quiet but rude">
                 </div>
                 <div>
-                    <label for="characterRelationInput2">Character 2 Relationship:</label>
+                    <label for="characterRelationInput2">relationship with character 1:</label>
                     <input type="text" class="character-relation" name="characterRelation2"
-                        placeholder="Relationship with other characters">
+                        placeholder="Rob doesn't take Bob seriously">
                 </div>
             </div>
             </div>

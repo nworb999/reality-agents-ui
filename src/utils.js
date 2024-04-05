@@ -3,6 +3,7 @@ import {
   SCENE_DEFAULT,
   CONFLICT_DEFAULT,
   THEN_PRESS_ENTER,
+  SPINNER_SYMBOLS,
 } from "./constants.js";
 
 const ORDINAL_DICT = {
@@ -13,32 +14,12 @@ const ORDINAL_DICT = {
   5: "fifth",
 };
 
-export function displaySpinner(duration = 3) {
-  const spinnerSymbols = ["|", "/", "-", "\\"];
-  let startTime = Date.now();
-
-  // Hide cursor
-  process.stdout.write("\x1B[?25l");
-
-  const interval = setInterval(() => {
-    spinnerSymbols.forEach((symbol) => {
-      if (Date.now() - startTime >= duration * 1000) {
-        clearInterval(interval);
-        process.stdout.write("\r \r"); // Clear line
-        process.stdout.write("\x1B[?25h"); // Show cursor
-        return;
-      }
-      process.stdout.write("\r" + symbol);
-    });
-  }, 100);
-}
-
-export function setupGame(
+export const setupGame = (
   sceneCache,
   conflictCache,
   charactersCache,
   testFlag = false
-) {
+) => {
   const scene = testFlag
     ? SCENE_DEFAULT
     : sceneCache ||
@@ -52,14 +33,14 @@ export function setupGame(
     : charactersCache || collectCharacters();
 
   return [scene, conflict, characters];
-}
+};
 
-function promptWithDefault(promptMessage, defaultValue) {
+const promptWithDefault = (promptMessage, defaultValue) => {
   const input = prompt(`${promptMessage}${THEN_PRESS_ENTER}`);
   return input || defaultValue;
-}
+};
 
-function definePlayerRelationships(players, testFlag = false) {
+const definePlayerRelationships = (players, testFlag = false) => {
   players.forEach((player, i) => {
     const targetPlayer = players[(i + 1) % players.length];
     let relationship = testFlag
@@ -68,23 +49,18 @@ function definePlayerRelationships(players, testFlag = false) {
           `How does ${player.name} feel about ${targetPlayer.name}?${THEN_PRESS_ENTER}`
         ).trim();
 
-    if (!testFlag) {
-      displaySpinner(1);
-    }
-
     player.relationshipToTarget =
       relationship || "They are just acquaintances.";
   });
   return players;
-}
+};
 
-export function collectCharacterInfo(playerNumber) {
+export const collectCharacterInfo = (playerNumber) => {
   const ordinal = ORDINAL_DICT[playerNumber] || `${playerNumber}th`;
   const name = prompt(
     `What is the name of the ${ordinal} character?${THEN_PRESS_ENTER}`
   ).trim();
 
-  displaySpinner(1);
   if (name.toLowerCase() === "test") {
     return null; // Signal to use default players
   }
@@ -92,12 +68,11 @@ export function collectCharacterInfo(playerNumber) {
   const personality = prompt(
     `What is ${name}'s personality?${THEN_PRESS_ENTER}`
   ).trim();
-  displaySpinner(1);
 
   return createCharacter(name, personality);
-}
+};
 
-function collectCharacters() {
+const collectCharacters = () => {
   const firstCharacter = collectCharacterInfo(1);
   if (firstCharacter === null) {
     return DEFAULT_PLAYERS;
@@ -117,16 +92,58 @@ function collectCharacters() {
   }
 
   return characters;
-}
+};
 
-function createCharacter(
+const createCharacter = (
   name,
   personality = null,
   relationshipToTarget = "They are just acquaintances."
-) {
+) => {
   return {
     name,
     personality,
     relationshipToTarget,
   };
-}
+};
+
+export const selectAndDisplayRandomStrings = (strings, elementId) => {
+  let selectedStrings = [];
+  for (let i = 0; i < 5; i++) {
+    const randomIndex = Math.floor(Math.random() * strings.length);
+    selectedStrings.push(strings[randomIndex]);
+  }
+
+  const concatenatedString = selectedStrings.join("\n");
+
+  typeWriter(elementId, concatenatedString, 50);
+};
+
+const typeWriter = (elementId, text, speed) => {
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < text.length) {
+      document.getElementById(elementId).textContent += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(interval);
+    }
+  }, speed);
+};
+export const spinner = (elementId, duration = 3000, speed = 100) => {
+  return new Promise((resolve) => {
+    const element = document.getElementById(elementId);
+    let startTime = Date.now();
+    let currentSymbolIndex = 0;
+
+    const interval = setInterval(() => {
+      if (Date.now() - startTime >= duration) {
+        clearInterval(interval);
+        resolve();
+        return;
+      }
+
+      element.textContent += SPINNER_SYMBOLS[currentSymbolIndex];
+      currentSymbolIndex = (currentSymbolIndex + 1) % SPINNER_SYMBOLS.length;
+    }, speed);
+  });
+};
