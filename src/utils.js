@@ -138,11 +138,12 @@ export const spinner = (elementId, duration = 3000, speed = 100) => {
     const interval = setInterval(() => {
       if (Date.now() - startTime >= duration) {
         clearInterval(interval);
+        element.textContent = ""; // Clear the spinner
         resolve();
         return;
       }
 
-      element.textContent += SPINNER_SYMBOLS[currentSymbolIndex];
+      element.textContent = SPINNER_SYMBOLS[currentSymbolIndex]; // Replace the previous symbol
       currentSymbolIndex = (currentSymbolIndex + 1) % SPINNER_SYMBOLS.length;
     }, speed);
   });
