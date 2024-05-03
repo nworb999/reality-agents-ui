@@ -35,18 +35,25 @@ gameSetupForm.addEventListener("submit", async (event) => {
   const characters = Array.from(document.querySelectorAll(".character")).map(
     (characterDiv) => {
       return {
-        name: characterDiv.querySelector(".character-name").value.trim(),
-        personality: characterDiv
-          .querySelector(".character-personality")
-          .value.trim(),
-        relationship_to_target: characterDiv
-          .querySelector(".character-relation")
-          .value.trim(),
+        name:
+          characterDiv.querySelector(".character-name").value.trim() ||
+          characterDiv.querySelector(".character-name").placeholder,
+        personality:
+          characterDiv.querySelector(".character-personality").value.trim() ||
+          characterDiv.querySelector(".character-personality").placeholder,
+        relationship_to_target:
+          characterDiv.querySelector(".character-relation").value.trim() ||
+          characterDiv.querySelector(".character-relation").placeholder,
       };
     }
   );
-  const scene = document.getElementById("sceneInput").value;
-  const conflict = document.getElementById("conflictInput").value;
+  console.log(characters);
+  const scene =
+    document.getElementById("sceneInput").value ||
+    document.getElementById("sceneInput").placeholder;
+  const conflict =
+    document.getElementById("conflictInput").value ||
+    document.getElementById("conflictInput").placeholder;
 
   await gameController.createGame({
     scene,

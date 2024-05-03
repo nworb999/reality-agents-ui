@@ -108,9 +108,12 @@ const createCharacter = (
 
 export const selectAndDisplayRandomStrings = (strings, elementId) => {
   let selectedStrings = [];
-  for (let i = 0; i < 5; i++) {
-    const randomIndex = Math.floor(Math.random() * strings.length);
-    selectedStrings.push(strings[randomIndex]);
+  let remainingStrings = [...strings];
+
+  for (let i = 0; i < 5 && remainingStrings.length > 0; i++) {
+    const randomIndex = Math.floor(Math.random() * remainingStrings.length);
+    selectedStrings.push(remainingStrings[randomIndex]);
+    remainingStrings.splice(randomIndex, 1);
   }
 
   const concatenatedString = selectedStrings.join("\n");
@@ -129,6 +132,7 @@ const typeWriter = (elementId, text, speed) => {
     }
   }, speed);
 };
+
 export const spinner = (elementId, duration = 3000, speed = 100) => {
   return new Promise((resolve) => {
     const element = document.getElementById(elementId);
@@ -138,12 +142,12 @@ export const spinner = (elementId, duration = 3000, speed = 100) => {
     const interval = setInterval(() => {
       if (Date.now() - startTime >= duration) {
         clearInterval(interval);
-        element.textContent = ""; // Clear the spinner
+        element.textContent = "";
         resolve();
         return;
       }
 
-      element.textContent = SPINNER_SYMBOLS[currentSymbolIndex]; // Replace the previous symbol
+      element.textContent = SPINNER_SYMBOLS[currentSymbolIndex];
       currentSymbolIndex = (currentSymbolIndex + 1) % SPINNER_SYMBOLS.length;
     }, speed);
   });

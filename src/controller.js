@@ -71,8 +71,6 @@ export default class ConversationGameController {
         console.log("Game over: conversation ended");
         this.gameFinished = true;
       } else {
-        this.displayDialogue(data.dialogue);
-
         // Process the character turn
         this.currentCharacter =
           (this.currentCharacter + 1) % this.characters.length;
@@ -83,9 +81,5 @@ export default class ConversationGameController {
     }
 
     console.log("Exiting game loop.");
-  }
-
-  displayDialogue(dialogue) {
-    console.log("Dialogue:", dialogue);
   }
 }
