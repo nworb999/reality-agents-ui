@@ -26,6 +26,34 @@ form div {
     text-align: left;
 }
 
+form div.button {
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    width: 80%; /* Take full width to ensure centering works */
+    padding: 1.5rem
+}
+
+.terminal-button {
+    background-color: #14191e;
+    color: #dbdbdb;
+    margin: 0; 
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    border: 2px solid #555;
+    box-shadow: 2px 2px 2px #000;
+}
+
+.terminal-button:hover, .terminal-button:focus {
+    color: #14191e;
+    background-color: #dbdbdb;
+}
+
+
 input {
     background-color: #14191e;
     color: #dbdbdb;
