@@ -1,30 +1,59 @@
 import ConversationGameController from "./src/controller.js";
+import { GENERIC_SIMS_STATEMENTS } from "./src/constants.js";
+import { selectAndDisplayRandomStrings, spinner } from "./src/utils.js";
 
+let script = "";
 const gameSetupForm = document.getElementById("game-setup-form");
+const gameController = new ConversationGameController(script);
 
-// Handle form submission
+function initializeInputNavigation() {
+  const inputs = document.querySelectorAll("input[type=text]");
+  inputs[0].focus(); // Focus on the first input
+
+  inputs.forEach((input, index) => {
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Prevent form submission on Enter
+        if (index < inputs.length - 1) {
+          inputs[index + 1].focus(); // Move to the next input
+        }
+      }
+    });
+  });
+}
+
 gameSetupForm.addEventListener("submit", async (event) => {
   // Prevent the default form submission behavior
   event.preventDefault();
 
-  // Create a new game controller
-  const gameController = new ConversationGameController();
+  gameSetupForm.style.display = "none";
+
+  const gameOutput = document.getElementById("textBox");
+  gameOutput.hidden = false;
+  gameOutput.style.display = "block";
 
   const characters = Array.from(document.querySelectorAll(".character")).map(
     (characterDiv) => {
       return {
-        name: characterDiv.querySelector(".character-name").value.trim(),
-        personality: characterDiv
-          .querySelector(".character-personality")
-          .value.trim(),
-        relationship_to_target: characterDiv
-          .querySelector(".character-relation")
-          .value.trim(),
+        name:
+          characterDiv.querySelector(".character-name").value.trim() ||
+          characterDiv.querySelector(".character-name").placeholder,
+        personality:
+          characterDiv.querySelector(".character-personality").value.trim() ||
+          characterDiv.querySelector(".character-personality").placeholder,
+        relationship_to_target:
+          characterDiv.querySelector(".character-relation").value.trim() ||
+          characterDiv.querySelector(".character-relation").placeholder,
       };
     }
   );
-  const scene = document.getElementById("sceneInput").value;
-  const conflict = document.getElementById("conflictInput").value;
+  console.log(characters);
+  const scene =
+    document.getElementById("sceneInput").value ||
+    document.getElementById("sceneInput").placeholder;
+  const conflict =
+    document.getElementById("conflictInput").value ||
+    document.getElementById("conflictInput").placeholder;
 
   await gameController.createGame({
     scene,
@@ -32,6 +61,17 @@ gameSetupForm.addEventListener("submit", async (event) => {
     characters: characters,
   });
 
-  // Start the game
   gameController.startGame();
+
+  await spinner("textBox");
+  selectAndDisplayRandomStrings(GENERIC_SIMS_STATEMENTS, "textBox");
 });
+
+const gameLoopJob = setInterval(() => {
+  if (gameController.gameStarted) {
+    clearInterval(gameLoopJob);
+    gameController.gameLoop();
+  }
+}, 500);
+
+initializeInputNavigation();
