@@ -45,7 +45,6 @@ form div.button {
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     border: 2px solid #555;
-    box-shadow: 2px 2px 2px #000;
 }
 
 .terminal-button:hover, .terminal-button:focus {

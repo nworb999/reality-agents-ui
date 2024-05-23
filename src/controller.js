@@ -32,15 +32,39 @@ export default class ConversationGameController {
 
   async startGame() {
     console.log("Starting game...");
-    const response = await fetch(`${URL}/api/game/start`, {
+    const startGamePromise = fetch(`${URL}/api/game/start`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => response.json());
+
+    const fetchLogsPromise = this.fetchLogs();
+
+    const [startGameData] = await Promise.all([
+      startGamePromise,
+      fetchLogsPromise,
+    ]);
+
+    console.log("Game started:", startGameData);
+    this.gameStarted = true;
+  }
+
+  async fetchLogs() {
+    const response = await fetch(`${URL}/api/game/logs`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
     const data = await response.json();
-    console.log("Game started:", data);
-    this.gameStarted = true;
+
+    if (data.logs && data.logs.length > this.lastLogIndex + 1) {
+      const newLogs = data.logs.slice(this.lastLogIndex + 1).join("\n");
+      this.script += newLogs + "\n"; // Append new logs to the script
+      this.lastLogIndex = data.logs.length - 1; // Update the last log index
+      console.log("New logs added to script:\n", newLogs);
+    }
   }
 
   async gameLoop() {
@@ -55,13 +79,7 @@ export default class ConversationGameController {
       });
       const data = await response.json();
 
-      // Update the script with new logs
-      if (data.logs && data.logs.length > this.lastLogIndex + 1) {
-        const newLogs = data.logs.slice(this.lastLogIndex + 1).join("\n");
-        this.script += newLogs + "\n"; // Append new logs to the script
-        this.lastLogIndex = data.logs.length - 1; // Update the last log index
-        console.log("New logs added to script:\n", newLogs);
-      }
+      await this.fetchLogs();
 
       // Check for game over conditions
       if (data.message === "Game over: cutoff reached") {
@@ -77,7 +95,7 @@ export default class ConversationGameController {
       }
 
       // Wait for 5 seconds before the next update
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
     }
 
     console.log("Exiting game loop.");

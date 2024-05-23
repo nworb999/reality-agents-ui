@@ -72,6 +72,6 @@ const gameLoopJob = setInterval(() => {
     clearInterval(gameLoopJob);
     gameController.gameLoop();
   }
-}, 1000);
+}, 500);
 
 initializeInputNavigation();
