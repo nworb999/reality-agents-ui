@@ -106,34 +106,89 @@ const createCharacter = (
   };
 };
 
+export const clearScreen = () => {
+  const element = document.getElementById("textBox");
+  element.textBox = "";
+};
+
 export const selectAndDisplayRandomStrings = (strings, elementId) => {
-  let selectedStrings = [];
-  let remainingStrings = [...strings];
+  return new Promise(async (resolve) => {
+    let selectedStrings = [];
+    let remainingStrings = [...strings];
 
-  for (let i = 0; i < 5 && remainingStrings.length > 0; i++) {
-    const randomIndex = Math.floor(Math.random() * remainingStrings.length);
-    selectedStrings.push(remainingStrings[randomIndex]);
-    remainingStrings.splice(randomIndex, 1);
-  }
-
-  const concatenatedString = selectedStrings.join("\n");
-
-  typeWriter(elementId, concatenatedString, 50);
-};
-
-const typeWriter = (elementId, text, speed) => {
-  let i = 0;
-  const interval = setInterval(() => {
-    if (i < text.length) {
-      document.getElementById(elementId).textContent += text.charAt(i);
-      i++;
-    } else {
-      clearInterval(interval);
+    for (let i = 0; i < 5 && remainingStrings.length > 0; i++) {
+      const randomIndex = Math.floor(Math.random() * remainingStrings.length);
+      selectedStrings.push(remainingStrings[randomIndex]);
+      remainingStrings.splice(randomIndex, 1);
     }
-  }, speed);
+
+    const concatenatedString = selectedStrings.join("\n");
+
+    await typeWriter({ elementId, text: concatenatedString, speed: 50 });
+    resolve();
+  });
 };
 
-export const spinner = (elementId, duration = 3000, speed = 100) => {
+export const typeWriter = ({
+  elementId = "textBox",
+  text,
+  speed = 50,
+} = {}) => {
+  return new Promise((resolve) => {
+    console.log("Typing text:", text);
+    let i = 0;
+    const element = document.getElementById(elementId);
+    // element.innerHTML = ""; // Clear existing content and prepare for HTML content
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(interval);
+        console.log("Finished typing text.");
+        resolve(); // Resolve the promise when finished typing
+      }
+    }, speed);
+  });
+};
+
+function extractInfoPart(line) {
+  const parts = line.split("- INFO -"); // Split the line at '- INFO -'
+  if (parts.length > 1) {
+    return parts[1]; // Return the second part if it exists
+  } else {
+    return null;
+  }
+}
+
+export const filterScriptText = (text, names) => {
+  const lines = text.split("\n"); // Split the script into lines
+  const filteredLines = [];
+  const nameLines = [];
+  lines.forEach((line) => {
+    const clean_line = extractInfoPart(line);
+    const nameFound = names.some((name) => {
+      const pattern = new RegExp(`^\\s*${name}:`, "i");
+      return pattern.test(clean_line);
+    });
+    if (nameFound) {
+      nameLines.push(clean_line);
+    } else {
+      filteredLines.push(line.replace(" INFO -", ""));
+    }
+  });
+  console.log(nameLines);
+  return {
+    filteredText: filteredLines.join("\n"),
+    nameText: nameLines.join("\n\n\n"),
+  };
+};
+
+export const spinner = ({
+  elementId = "textBox",
+  duration = 3000,
+  speed = 100,
+} = {}) => {
   return new Promise((resolve) => {
     const element = document.getElementById(elementId);
     let startTime = Date.now();

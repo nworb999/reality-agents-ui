@@ -7,7 +7,8 @@ export default class ConversationGameController {
     this.gameFinished = false;
     this.gameStarted = false;
     this.script = script;
-    this.lastLogIndex = -1; // Initialize lastLogIndex
+    this.lastLogIndex = -1;
+    this.logsInterval = null; // keep track of the log fetching interval
     console.log("ConversationGameController initialized.");
   }
 
@@ -39,11 +40,9 @@ export default class ConversationGameController {
       },
     }).then((response) => response.json());
 
-    const fetchLogsPromise = this.fetchLogs();
-
     const [startGameData] = await Promise.all([
       startGamePromise,
-      fetchLogsPromise,
+      this.startFetchingLogs(),
     ]);
 
     console.log("Game started:", startGameData);
@@ -67,6 +66,18 @@ export default class ConversationGameController {
     }
   }
 
+  startFetchingLogs() {
+    this.logsInterval = setInterval(() => this.fetchLogs(), 2000);
+  }
+
+  stopFetchingLogs() {
+    if (this.logsInterval) {
+      clearInterval(this.logsInterval);
+      this.logsInterval = null;
+      console.log("Stopped fetching logs.");
+    }
+  }
+
   async gameLoop() {
     console.log("Entering game loop...");
 
@@ -79,15 +90,14 @@ export default class ConversationGameController {
       });
       const data = await response.json();
 
-      await this.fetchLogs();
-
       // Check for game over conditions
-      if (data.message === "Game over: cutoff reached") {
-        console.log("Game over: cutoff reached");
+      if (
+        data.message === "Game over: cutoff reached" ||
+        data.message === "Game over: conversation ended"
+      ) {
+        console.log(data.message);
         this.gameFinished = true;
-      } else if (data.message === "Game over: conversation ended") {
-        console.log("Game over: conversation ended");
-        this.gameFinished = true;
+        this.stopFetchingLogs();
       } else {
         // Process the character turn
         this.currentCharacter =
