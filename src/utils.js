@@ -129,6 +129,13 @@ export const selectAndDisplayRandomStrings = (strings, elementId) => {
   });
 };
 
+const manageTextboxOverflow = (elementId, maxLines = 40) => {
+  const element = document.getElementById(elementId);
+  const lines = element.textContent.split("\n");
+  if (lines.length > maxLines) {
+    element.textContent = lines.slice(lines.length - maxLines).join("\n");
+  }
+};
 export const typeWriter = ({
   elementId = "textBox",
   text,
@@ -142,6 +149,7 @@ export const typeWriter = ({
     const interval = setInterval(() => {
       if (i < text.length) {
         element.innerHTML += text.charAt(i);
+        manageTextboxOverflow(elementId);
         i++;
       } else {
         clearInterval(interval);
@@ -166,20 +174,23 @@ export const filterScriptText = (text, names) => {
   const filteredLines = [];
   const nameLines = [];
   lines.forEach((line) => {
+    if (line.includes('Response : "')) {
+      return;
+    }
     const clean_line = extractInfoPart(line);
     const nameFound = names.some((name) => {
       const pattern = new RegExp(`^\\s*${name}:`, "i");
       return pattern.test(clean_line);
     });
     if (nameFound) {
-      nameLines.push(clean_line);
+      nameLines.push(clean_line + "\n\n\n");
     } else {
       filteredLines.push(line.replace(" INFO -", ""));
     }
   });
   console.log(nameLines);
   return {
-    filteredText: filteredLines.join("\n"),
+    filteredText: filteredLines.slice(0, 75).join("\n"),
     nameText: nameLines.join("\n\n\n"),
   };
 };

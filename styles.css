@@ -31,7 +31,7 @@ form div.button {
     display: flex; /* Use flexbox */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    width: 80%; /* Take full width to ensure centering works */
+    width: 100%; /* Take full width to ensure centering works */
     padding: 1.5rem
 }
 
@@ -83,15 +83,15 @@ input:focus {
     flex: 1; 
 }
 
-  
 .name-box {
     text-align: center; /* Center text inside the nameBox */
-    /* font-weight: bold; */
+    padding-left: 2vw;
 }
   
 
 .text-box {
     padding-left: 2vw;
+    padding-right: 2vw;
 } 
 
 .center-text {
