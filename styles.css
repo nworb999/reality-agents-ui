@@ -13,10 +13,11 @@ html {
     padding: 1vw;
     font-family: 'Courier New', monospace;
     max-height: 50vh;
+    padding-bottom:0;
 }
 
 form {
-    margin-top: 2vw;
+
     padding-left: 1vw;
     /* Add left padding to the form */
     font-family: 'Courier New', monospace;
@@ -30,7 +31,7 @@ form div.button {
     display: flex; /* Use flexbox */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    width: 80%; /* Take full width to ensure centering works */
+    width: 100%; /* Take full width to ensure centering works */
     padding: 1.5rem
 }
 
@@ -75,12 +76,32 @@ input:focus {
         border-color: transparent;
     }
 }
+.text-box, .name-box {
+    width: 80%;
+    font-family: 'Courier New', monospace;
+    white-space: pre-line;
+    flex: 1; 
+}
+
+.name-box {
+    text-align: center; /* Center text inside the nameBox */
+    padding-left: 2vw;
+}
+  
 
 .text-box {
     padding-left: 2vw;
-    /* Add left padding to the text box */
-    width: 80%;
-    font-family: 'Courier New', monospace;
-    display: none;
-    white-space: pre-line;
+    padding-right: 2vw;
+} 
+
+.center-text {
+    text-align: center;
 }
+
+.game-display {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+  
+
