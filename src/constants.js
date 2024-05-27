@@ -1,4 +1,6 @@
-export const URL = "http://localhost:4321";
+export const LOCAL_URL = "http://localhost:4321";
+
+export const URL = "https://reality-agents.wl.r.appspot.com:4321";
 
 export const THEN_PRESS_ENTER = " (then press Enter):";
 
