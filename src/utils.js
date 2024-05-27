@@ -174,7 +174,7 @@ export const filterScriptText = (text, names) => {
   const filteredLines = [];
   const nameLines = [];
   lines.forEach((line) => {
-    if (line.includes('Response : "')) {
+    if (line.includes('Response: "')) {
       return;
     }
     const clean_line = extractInfoPart(line);
@@ -185,12 +185,25 @@ export const filterScriptText = (text, names) => {
     if (nameFound) {
       nameLines.push(clean_line + "\n\n\n");
     } else {
-      filteredLines.push(line.replace(" INFO -", ""));
+      let formattedLine = line
+        .replace(" INFO -", "")
+        .replace(", this might take a while", "")
+        .replace("...", "")
+        .replace(" * ", " ")
+        .replace("**:", "")
+        .replace("**", " ")
+        .replace("• ", "")
+        .replace("Response:", "Thinking:")
+        .slice(0, 60);
+      if (formattedLine.length > 1) {
+        formattedLine += "...";
+      }
+      filteredLines.push(formattedLine);
     }
   });
   console.log(nameLines);
   return {
-    filteredText: filteredLines.slice(0, 75).join("\n"),
+    filteredText: filteredLines.join("\n"),
     nameText: nameLines.join("\n\n\n"),
   };
 };
