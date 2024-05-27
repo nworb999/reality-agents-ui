@@ -86,10 +86,12 @@ input:focus {
 .name-box {
     text-align: center; /* Center text inside the nameBox */
     padding-left: 2vw;
+    padding-right: 2vw;
 }
   
 
 .text-box {
+    color: #b6b5b5;
     padding-left: 2vw;
     padding-right: 2vw;
 } 
