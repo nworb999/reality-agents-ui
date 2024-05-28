@@ -27,7 +27,18 @@ export default class ConversationGameController {
         max_turns: max_turns,
       }),
     });
-    const data = await response.json();
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Game created:", data);
+    } else {
+      console.error(
+        "Failed to create game:",
+        response.status,
+        await response.text()
+      );
+    }
+
     console.log("Game created:", data);
   }
 
