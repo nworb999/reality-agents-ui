@@ -38,8 +38,6 @@ export default class ConversationGameController {
         await response.text()
       );
     }
-
-    console.log("Game created:", data);
   }
 
   async startGame() {
