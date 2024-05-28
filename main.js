@@ -93,14 +93,18 @@ gameSetupForm.addEventListener("submit", async (event) => {
   const conflict =
     document.getElementById("conflictInput").value ||
     document.getElementById("conflictInput").placeholder;
-
+  console.log({
+    scene,
+    conflict,
+    characters: characters,
+  });
   await gameController.createGame({
     scene,
     conflict,
     characters: characters,
   });
 
-  gameController.startGame();
+  await gameController.startGame(); // this didn't have an await before
 
   await spinner();
 
