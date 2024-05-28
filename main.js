@@ -104,7 +104,7 @@ gameSetupForm.addEventListener("submit", async (event) => {
     characters: characters,
   });
 
-  await gameController.startGame(); // this didn't have an await before
+  gameController.startGame();
 
   await spinner();
 
